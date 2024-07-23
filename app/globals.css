@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+
+.react-tabs__tab--selected {
+    background: #fff;
+    border-color: #e0050500 !important;
+    color: #004080;
+    box-shadow: 0 0 2px;
+    border-radius: 5px 5px 0 0;
+    margin: 0 1px;
+
+}
+
+.react-tabs__tab {
+    width: 100%;
+    background-color: #004080;
+    color: white;
+    font-weight: normal;
+    border-radius: 5px 5px 0 0;
+    margin: 0 1px;
+}
+
+.szh-accordion {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+.szh-accordion__item-content {
+    position: absolute;
+    /* width: 100%; */
+    left: 10px;
+    right: 10px;
+}
+
+.szh-accordion__item-btn {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    background-image: linear-gradient(to bottom, #f0f4f8, #d6e0f5);
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin: 10px 2px;
+    color: #004080;
+    font-weight: 600;
+    font-family: 'Arial', sans-serif;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    width: auto;
+}
+
+.szh-accordion__item-btn:hover {
+    background-image: linear-gradient(to bottom, #d6e0f5, #f0f4f8);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+    color: #003060;
+}
+
+.bghome {
+    background-image: url('../public/short-term-loan-handing-out-1-2048x1365.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+
+
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    .print-content, .print-content * {
+        visibility: visible;
+    }
+    .print-content {
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+}
+
