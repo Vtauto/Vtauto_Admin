@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { Menu } from "lucide-react";
 import { signOut } from 'next-auth/react';
 import { useSession } from 'next-auth/react'
+import Image from 'next/image';
 
 export default function Navbar() {
     const { data: session } = useSession();
@@ -34,11 +35,13 @@ export default function Navbar() {
     return (
         <>
 
-            <nav className="bg-gradient-to-br from-blue-200 to-blue-700 py-4">
+            <nav className="bg-gradient-to-r from-blue-50 to-blue-700 py-4">
                 <div className="container mx-auto xl:px-8 px-4">
                     <div className="grid grid-cols-5 gap-4 items-center">
                         <div className="col-span-1">
-                            <span className=' text-4xl font-bold text-white'><Link href="/user/dashboard/admin">Admin</Link></span>
+                            <span className=' text-4xl font-bold text-white'><Link href="/user/dashboard/admin">
+                            <Image src="/Untitled design.png" width={50} height={50}/>
+                            </Link></span>
                         </div>
                         <div className="col-span-4 flex justify-end">
                             <ul className={`transition-transform transform ${show ? "translate-x-0 bg-gradient-to-br from-blue-600 via-blue-500 to-white p-5" : "-translate-x-full"} lg:translate-x-0 z-50 absolute lg:static h-full w-full pt-16 lg:pt-0 leading-10 left-0 top-0 lg:flex gap-8 justify-end lg:bg-transparent`}>

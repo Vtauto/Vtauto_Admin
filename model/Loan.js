@@ -199,7 +199,7 @@ const LoanSchema = new Schema(
     default:{
       type:String,
       required:true,
-      default:"allloan"
+      default:"allloannew"
     }
 
 

@@ -106,9 +106,12 @@ export default function Singleinsurance({ params }) {
                     <ul className='grid grid-cols-2 gap-2'>
 
                         <li className='text-gray-400 text-sm hover:underline'>
-                            <Link href={insurance.aadharcard} target="_blank" className='flex gap-2'>
-                                <Image alt='' src={insurance.aadharcard} width={20} height={20} />Aadhar Card
+                        {insurance.aadharcard && insurance.aadharcard.map((imgUrl, idx) => (
+                            <Link key={idx} href={imgUrl} target='_blank' className=' flex gap-2' >
+                                <Image src={imgUrl} alt={`aadharcard-img-${idx}`} width={20} height={20} className="object-cover rounded" />Aadhar Card
                             </Link>
+                        ))}
+                            
                         </li>
                         <li className='text-gray-400 text-sm hover:underline'>
                             <Link href={insurance.pan_card} target="_blank" className='flex gap-2'>
@@ -116,9 +119,12 @@ export default function Singleinsurance({ params }) {
                             </Link>
                         </li>
                         <li className='text-gray-400 text-sm hover:underline'>
-                            <Link href={insurance.rc} target="_blank" className='flex gap-2'>
-                                <Image alt='' src={insurance.rc} width={20} height={20} />RC
+                          
+                            {insurance.rc && insurance.rc.map((imgUrl, idx) => (
+                            <Link key={idx} href={imgUrl} target='_blank' className=' flex gap-2' >
+                                <Image src={imgUrl} alt={`rc-img-${idx}`} width={20} height={20} className="object-cover rounded" />RC
                             </Link>
+                        ))}
                         </li>
                         <li className='text-gray-400 text-sm hover:underline'>
                             <Link href={insurance.old_policy} target="_blank" className='flex gap-2'>

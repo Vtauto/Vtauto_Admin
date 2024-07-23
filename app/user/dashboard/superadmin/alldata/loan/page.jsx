@@ -14,6 +14,7 @@ export default function AllLoan() {
         const fetchUsers = async () => {
             try {
                 const response = await axios.get('/api/user/fetch-user/alluser');
+                console.log(response)
                 if (response.data.success) {
                     setUsers(response.data.data);
                 } else {
@@ -30,9 +31,11 @@ export default function AllLoan() {
     useEffect(() => {
         const fetchLoans = async () => {
             try {
-                const response = await axios.get('/api/loan/fetch-loan/allloan');
+                const response = await axios.get('/api/loan/fetch-loan/allloannew');
+               console.log(response)
                 if (response.data.success) {
                     setLoan(response.data.data);
+                  
                     setLoading(false); // Set loading to false when data is fetched
                 } else {
                     console.error('Error fetching loans:', response.data.message);
@@ -113,7 +116,7 @@ export default function AllLoan() {
                 </div>
                 {loading ? (
                     <div className=' w-full  flex justify-center items-center gap-4 flex-col'>
-                        <div class="w-24 h-24 rounded-full border-4 border-blue-100 border-t-blue-500 animate-spin"></div>
+                        <div className="w-24 h-24 rounded-full border-4 border-blue-100 border-t-blue-500 animate-spin"></div>
                         <p className=' font-bold text-2xl text-blue-600'> Please wait...</p>
                     </div>
                 ) : (

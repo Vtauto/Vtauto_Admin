@@ -212,9 +212,12 @@ export default function Singlerto({ params }) {
                             </Link>
                         </li>
                         <li className='text-gray-400 text-sm hover:underline'>
-                            <Link href={rto.rc} target="_blank" className='flex gap-2'>
-                                <Image alt='' src={rto.rc} width={20} height={20} />Rc
+                           
+                            {rto.rc && rto.rc.map((imgUrl, idx) => (
+                            <Link key={idx} href={imgUrl} target='_blank'  className='flex gap-2'>
+                                <Image src={imgUrl} alt={`rc-img-${idx}`} width={20} height={20} className="object-cover rounded" />RC
                             </Link>
+                        ))}
                         </li>
 
                     </ul>

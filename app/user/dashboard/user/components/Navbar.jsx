@@ -1,6 +1,7 @@
 "use client"
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image';
 import { Menu } from "lucide-react";
 import { signOut } from 'next-auth/react';
 import { useSession } from 'next-auth/react'
@@ -32,12 +33,14 @@ export default function Navbar() {
 
     return (
         <>
-            <nav className="bg-gradient-to-br from-blue-200 to-blue-700 py-4">
+            <nav className="bg-gradient-to-r from-blue-50 to-blue-700 py-4">
                 <div className="container mx-auto xl:px-8 px-4">
                     <div className="grid grid-cols-6 gap-4 items-center">
                         <div className="col-span-1">
                             <span className='text-4xl font-bold text-white'>
-                                <Link href="/user/dashboard/user">Dashboard</Link>
+                                <Link href="/user/dashboard/user">
+                                <Image src="/Untitled design.png" width={50} height={50}/>
+                                </Link>
                             </span>
                         </div>
                         <div className="col-span-5 flex justify-end">

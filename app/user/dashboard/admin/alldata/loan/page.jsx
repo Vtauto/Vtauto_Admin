@@ -30,7 +30,7 @@ export default function AllLoan() {
     useEffect(() => {
         const fetchLoans = async () => {
             try {
-                const response = await axios.get('/api/loan/fetch-loan/allloan');
+                const response = await axios.get('/api/loan/fetch-loan/allloannew');
                 if (response.data.success) {
                     setLoan(response.data.data);
                     setLoading(false); // Set loading to false when data is fetched
