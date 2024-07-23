@@ -148,14 +148,7 @@ export default function Singleloan({ params }) {
                   <td className="px-3 py-2 font-medium">{loan.coapplicant_voterid_number}</td>
                 </tr>
               )}
-              {loan.coapplicant_aadharcard && (
-                <tr className="bg-white border border-gray-300">
-                  <td className="px-3 py-2 font-bold">Co-Applicant Aadhar card</td>
-                  <td className="px-3 py-2 font-medium">
-                    <Image src={loan.coapplicant_aadharcard} width={50} height={50} alt='' />
-                  </td>
-                </tr>
-              )}
+           
             </tbody>
           </table>
 
