@@ -40,7 +40,7 @@ export default function Navbar() {
                     <div className="grid grid-cols-5 gap-4 items-center">
                         <div className="col-span-1">
                             <span className=' text-4xl font-bold text-white'><Link href="/user/dashboard/admin">
-                            <Image src="/Untitled design.png" width={50} height={50}/>
+                            <Image src="/Untitled design.png" alt='' width={50} height={50}/>
                             </Link></span>
                         </div>
                         <div className="col-span-4 flex justify-end">
@@ -58,7 +58,7 @@ export default function Navbar() {
                                 <Link onClick={handleLinkClick} className='  cursor-pointer' href="/user/dashboard/admin/alldata/rto">
                                     <li className='font-medium text-gray-200 border-b lg:border-0 rounded-md hover:bg-white/10 lg:hover:underline underline-offset-2 lg:hover:bg-transparent px-2 lg:px-0'>All Rto
                                 </li></Link>
-                                <Link onClick={handleLinkClick} className='  cursor-pointer' href="/user/dashboard/admin/loan">
+                                {/* <Link onClick={handleLinkClick} className='  cursor-pointer' href="/user/dashboard/admin/loan">
                                     <li className='font-medium text-gray-200 border-b lg:border-0 rounded-md hover:bg-white/10 lg:hover:underline underline-offset-2 lg:hover:bg-transparent px-2 lg:px-0'>Loan
                                 </li></Link>
                                 <Link onClick={handleLinkClick} className='  cursor-pointer' href="/user/dashboard/admin/insurance">
@@ -66,7 +66,7 @@ export default function Navbar() {
                                 </li></Link>
                                 <Link onClick={handleLinkClick} className='  cursor-pointer' href="/user/dashboard/admin/rto">
                                    <li className='font-medium text-gray-200 border-b lg:border-0 rounded-md hover:bg-white/10 lg:hover:underline underline-offset-2 lg:hover:bg-transparent px-2 lg:px-0'> Rto
-                                </li></Link>
+                                </li></Link> */}
                                 <button
                                     className='text-white w-full lg:w-fit bg-red-600 rounded-md px-4 mt-4 lg:mt-0'
                                     onClick={() => signOut()}>

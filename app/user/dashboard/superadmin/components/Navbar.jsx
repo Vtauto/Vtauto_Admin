@@ -41,7 +41,7 @@ export default function Navbar() {
                     <div className="grid grid-cols-5 gap-4 items-center">
                         <div className="col-span-1">
                             <span className=' text-4xl font-bold text-white'><Link href="/user/dashboard/superadmin">
-                            <Image src="/Untitled design.png" width={50} height={50}/>
+                            <Image src="/Untitled design.png"  alt='' width={50} height={50}/>
                             </Link></span>
                         </div>
                         <div className="col-span-4 flex justify-end">
@@ -67,7 +67,7 @@ export default function Navbar() {
                                 All Rto
                                     </li>
                                 </Link>
-                                <Link onClick={handleLinkClick} className=' cursor-pointer' href="/user/dashboard/superadmin/loan">
+                                {/* <Link onClick={handleLinkClick} className=' cursor-pointer' href="/user/dashboard/superadmin/loan">
                                     <li className='font-medium text-gray-200 border-b lg:border-0 rounded-md hover:bg-white/10 lg:hover:underline underline-offset-2 lg:hover:bg-transparent px-2 lg:px-0'>
                                 Loan
                                     </li>
@@ -81,7 +81,7 @@ export default function Navbar() {
                                     <li className='font-medium text-gray-200 border-b lg:border-0 rounded-md hover:bg-white/10 lg:hover:underline underline-offset-2 lg:hover:bg-transparent px-2 lg:px-0'>
                                 Rto
                                     </li>
-                                </Link>
+                                </Link> */}
                                 <button
                                     className='text-white w-full lg:w-fit bg-red-600 rounded-md px-4 mt-4 lg:mt-0'
                                     onClick={() => signOut()}>

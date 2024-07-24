@@ -95,7 +95,7 @@ export default function UpdateInsurance({ params }) {
 
     return (
         <div className='flex justify-center items-center mt-4'>
-            <form className='flex flex-col border sm:w-2/3 w-full p-4 rounded-md shadow'>
+          <form className='flex flex-col border sm:w-2/3 w-full p-4 rounded-md shadow'>
                 <button onClick={handlePrint} className=' bg-blue-600 w-fit text-white font-medium py-1 px-4 rounded-md m-2'>Print</button>
                 {insurance.status === false && (
                     <span className="w-fit items-center rounded-full bg-blue-50 px-1.5 py-0.5 text-xs font-medium text-blue-600 ring-1 ring-inset ring-blue-500">
@@ -107,41 +107,61 @@ export default function UpdateInsurance({ params }) {
                         Approved
                     </span>
                 )}
-                <table class='border-collapse border w-full border-gray-300 mt-2 print-content'>
-                    <tr>
-                        <th class='border text-left border-gray-300  p-1 font-medium'>Name</th>
-                        <td class='border border-gray-300 p-1'>{insurance.name}</td>
-                    </tr>
-                    <tr>
-                        <th class='border border-gray-300 text-left p-1 font-medium'>Mobile No</th>
-                        <td class='border border-gray-300 p-1'>{insurance.mobile_no}</td>
-                    </tr>
-                    <tr>
-                        <th class='border border-gray-300 text-left p-1 font-medium'>Vehicle No</th>
-                        <td class='border border-gray-300 p-1'>{insurance.vehicle_no}</td>
-                    </tr>
-                    <tr>
-                        <th class='border border-gray-300 text-left p-1 font-medium'>RC No</th>
-                        <td class='border border-gray-300 p-1'>{insurance.rc_no}</td>
-                    </tr>
-                    <tr>
-                        <th class='border border-gray-300 text-left p-1 font-medium'>Aadharcard No</th>
-                        <td class='border border-gray-300 p-1'>{insurance.aadharcard_no}</td>
-                    </tr>
-                    <tr>
-                        <th class='border border-gray-300 text-left p-1 font-medium'>Pan Card No</th>
-                        <td class='border border-gray-300 p-1'>{insurance.pan_card_no}</td>
-                    </tr>
-                    <tr>
-                        <th class='border border-gray-300 text-left p-1 font-medium'>Old Policy No</th>
-                        <td class='border border-gray-300 p-1'>{insurance.old_policy_no}</td>
-                    </tr>
+                <table className='border-collapse border w-full border-gray-300 mt-2 print-content'>
+                    {insurance.name && (
+                        <tr>
+                            <th className='border text-left border-gray-300  p-1 font-medium'>Name</th>
+                            <td className='border border-gray-300 p-1'>{insurance.name}</td>
+                        </tr>
+                    )}
+
+                    {insurance.mobile_no && (
+                        <tr>
+                            <th className='border border-gray-300 text-left p-1 font-medium'>Mobile No</th>
+                            <td className='border border-gray-300 p-1'>{insurance.mobile_no}</td>
+                        </tr>
+                    )}
+
+                    {insurance.vehicle_no && (
+                        <tr>
+                            <th className='border border-gray-300 text-left p-1 font-medium'>Vehicle No</th>
+                            <td className='border border-gray-300 p-1'>{insurance.vehicle_no}</td>
+                        </tr>
+                    )}
+
+                    {insurance.rc_no && (
+                        <tr>
+                            <th className='border border-gray-300 text-left p-1 font-medium'>RC No</th>
+                            <td className='border border-gray-300 p-1'>{insurance.rc_no}</td>
+                        </tr>
+                    )}
+
+                    {insurance.aadharcard_no && (
+                        <tr>
+                            <th className='border border-gray-300 text-left p-1 font-medium'>Aadharcard No</th>
+                            <td className='border border-gray-300 p-1'>{insurance.aadharcard_no}</td>
+                        </tr>
+                    )}
+
+                    {insurance.pan_card_no && (
+                        <tr>
+                            <th className='border border-gray-300 text-left p-1 font-medium'>Pan Card No</th>
+                            <td className='border border-gray-300 p-1'>{insurance.pan_card_no}</td>
+                        </tr>
+                    )}
+
+                    {insurance.old_policy_no && (
+                        <tr>
+                            <th className='border border-gray-300 text-left p-1 font-medium'>Old Policy No</th>
+                            <td className='border border-gray-300 p-1'>{insurance.old_policy_no}</td>
+                        </tr>
+                    )}
                 </table>
 
                 <div className='flex flex-wrap gap-2 mt-2'>
                     <div className="bg-white w-full md:w-1/3 lg:w-fit flex flex-col rounded-md border border-gray-300 px-3 py-2 shadow-sm focus-within:shadow-inner">
                         <span className='font-bold mb-2'>All Document Links</span>
-                        <ul className='grid grid-cols-2 gap-2'>
+                        <ul className='  gap-2'>
                             <li className='text-gray-400 text-sm hover:underline'>
 
                                 {insurance.aadharcard && insurance.aadharcard.map((imgUrl, idx) => (
@@ -150,12 +170,13 @@ export default function UpdateInsurance({ params }) {
                                     </Link>
                                 ))}
                             </li>
-
+                            {insurance.pan_card && (
                             <li className='text-gray-400 text-sm hover:underline'>
                                 <Link href={insurance.pan_card} target="_blank" className='flex gap-2'>
                                     <Image alt='' src={insurance.pan_card} width={20} height={20} />Pan Card
                                 </Link>
                             </li>
+                            )}
                             <li className='text-gray-400 text-sm hover:underline'>
 
                                 {insurance.rc && insurance.rc.map((imgUrl, idx) => (
@@ -164,11 +185,14 @@ export default function UpdateInsurance({ params }) {
                                     </Link>
                                 ))}
                             </li>
+
+                            {insurance.old_policy && (
                             <li className='text-gray-400 text-sm hover:underline'>
                                 <Link href={insurance.old_policy} target="_blank" className='flex gap-2'>
                                     <Image alt='' src={insurance.old_policy} width={20} height={20} />Old Policy
                                 </Link>
                             </li>
+                            )}
                         </ul>
                     </div>
                     <div className="bg-white w-full md:w-1/3 lg:w-fit flex flex-col rounded-md border border-gray-300 px-3 py-2 shadow-sm focus-within:shadow-inner">

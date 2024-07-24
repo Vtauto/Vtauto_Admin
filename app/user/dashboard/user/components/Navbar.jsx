@@ -39,7 +39,7 @@ export default function Navbar() {
                         <div className="col-span-1">
                             <span className='text-4xl font-bold text-white'>
                                 <Link href="/user/dashboard/user">
-                                <Image src="/Untitled design.png" width={50} height={50}/>
+                                <Image src="/Untitled design.png"  alt='' width={50} height={50}/>
                                 </Link>
                             </span>
                         </div>
