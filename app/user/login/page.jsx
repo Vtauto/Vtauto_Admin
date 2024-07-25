@@ -48,7 +48,8 @@ export default function Login() {
       } else if (response.data.user_type === 1) {
         router.push('/user/dashboard/admin');
       } else {
-        router.push('/user/dashboard/user');
+        setError("You are not eligible for this website");
+        setLoading(false); // Set loading state to false if the user is not eligible
       }
     } catch (error) {
       console.error('Error fetching user:', error);

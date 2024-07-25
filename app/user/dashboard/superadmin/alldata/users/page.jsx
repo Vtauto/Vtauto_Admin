@@ -126,9 +126,15 @@ export default function Users() {
                                         </div>
                                         <p className="mt-1 truncate text-sm text-gray-500">{user.email}</p>
                                     </div>
-                                    <Link href={`updateuser/${user._id}`}>
-                                        <button className='text-green-600 hover:bg-green-100 rounded-md px-2 py-0.5 transition-all'>Edit</button>
+                                  <div className=' flex flex-col text-center gap-2'>
+                                  <Link href={`updateuser/${user._id}`}>
+                                        <button className='text-green-600 hover:bg-green-100 rounded-md px-2 py-0.5 transition-all border'>Edit</button>
                                     </Link>
+
+                                    <Link href={`message/${user._id}`}>
+                                        <button className='text-white bg-blue-700 rounded-md px-2 py-0.5 transition-all border'>Message</button>
+                                    </Link>
+                                  </div>
                                 </div>
                             </li>
                         ))}
