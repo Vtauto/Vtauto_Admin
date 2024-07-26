@@ -56,7 +56,9 @@ export const PATCH = async (request) => {
             electricity_bill,
             agreement,
             banking,
-            status
+            status,
+            file1,
+            file2
 
         } = await request.json();
 
@@ -122,6 +124,8 @@ export const PATCH = async (request) => {
             agreement,
             banking,
             status,
+            file1,
+            file2,
             updated: new Date(),
         });
 

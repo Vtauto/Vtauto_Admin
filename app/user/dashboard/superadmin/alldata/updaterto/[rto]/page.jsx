@@ -94,7 +94,7 @@ export default function UpdateRto({ params }) {
             const response = await axios.delete(`/api/rto/delete/${rtoid}`);
 
             if (response.data.success) {
-                router.push('/user/dashboard/admin/alldata/rto');
+                router.push('/user/dashboard/superadmin/alldata/rto');
             } else {
                 console.error('Error deleting rto:', response.data.message);
             }
@@ -229,41 +229,41 @@ export default function UpdateRto({ params }) {
                     <ul className='grid grid-cols-2 gap-2'>
 
                         <li className='text-gray-400 text-sm hover:underline'>
-                            {rto.rc_expiry && (
+                            {rto.vehicle_insurance && (
                                 <Link href={rto.vehicle_insurance} target="_blank" className='flex gap-2'>
                                     <Image alt='' src={rto.vehicle_insurance} width={20} height={20} />Insurance
                                 </Link>
                             )}
                         </li>
-                        {rto.rc_expiry && (
+                        {rto.fitness && (
                             <li className='text-gray-400 text-sm hover:underline'>
                                 <Link href={rto.fitness} target="_blank" className='flex gap-2'>
                                     <Image alt='' src={rto.fitness} width={20} height={20} />Fitness
                                 </Link>
                             </li>
                         )}
-                        {rto.rc_expiry && (
+                        {rto.puc && (
                             <li className='text-gray-400 text-sm hover:underline'>
                                 <Link href={rto.puc} target="_blank" className='flex gap-2'>
                                     <Image alt='' src={rto.puc} width={20} height={20} />Puc
                                 </Link>
                             </li>
                         )}
-                        {rto.rc_expiry && (
+                        {rto.permit && (
                             <li className='text-gray-400 text-sm hover:underline'>
                                 <Link href={rto.permit} target="_blank" className='flex gap-2'>
                                     <Image alt='' src={rto.permit} width={20} height={20} />Permit
                                 </Link>
                             </li>
                         )}
-                        {rto.rc_expiry && (
+                        {rto.tax && (
                             <li className='text-gray-400 text-sm hover:underline'>
                                 <Link href={rto.tax} target="_blank" className='flex gap-2'>
                                     <Image alt='' src={rto.tax} width={20} height={20} />Tax
                                 </Link>
                             </li>
                         )}
-                        {rto.rc_expiry && (
+                        {rto.rc && (
                             <li className='text-gray-400 text-sm hover:underline'>
 
                                 {rto.rc && rto.rc.map((imgUrl, idx) => (

@@ -32,10 +32,10 @@ export default function AllLoan() {
         const fetchLoans = async () => {
             try {
                 const response = await axios.get('/api/loan/fetch-loan/allloannew');
-               console.log(response)
+                console.log(response)
                 if (response.data.success) {
                     setLoan(response.data.data);
-                  
+
                     setLoading(false); // Set loading to false when data is fetched
                 } else {
                     console.error('Error fetching loans:', response.data.message);
@@ -68,7 +68,7 @@ export default function AllLoan() {
             console.error('Error deleting loan:', error);
         }
     };
-    
+
 
     const filteredLoans = loan.filter((item) => {
         const matchesSearchQuery = item.applicant_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -126,35 +126,29 @@ export default function AllLoan() {
                                 <h2 className="text-2xl font-semibold text-gray-600 mb-4">Employee Name: {userLookup[userid]}</h2>
                                 <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                                     {groupedLoans[userid].map((loan) => (
-                                        <li key={loan._id} className="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow">
+                                        <li key={loan._id} className=" relative col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow">
                                             <div className="flex w-full items-center justify-between space-x-6 p-6">
+                                                <div className=' absolute bottom-0 left-0 bg-blue-950 text-white font-medium px-2 rounded-md'>
+                                                    {loan.status}
+                                                </div>
                                                 <div className="flex-1 truncate">
                                                     <div className="flex items-center space-x-3">
                                                         <h3 className="truncate text-sm font-medium text-gray-900">{loan.applicant_name}</h3>
-                                                        {loan.status === false && (
-                                                            <span className="inline-flex flex-shrink-0 items-center rounded-full bg-red-50 px-1.5 py-0.5 text-xs font-medium text-red-600 ring-1 ring-inset ring-red-600/20">
-                                                                Pending
-                                                            </span>
-                                                        )}
-                                                        {loan.status === true && (
-                                                            <span className="inline-flex flex-shrink-0 items-center rounded-full bg-green-50 px-1.5 py-0.5 text-xs font-medium text-green-600 ring-1 ring-inset ring-green-600/20">
-                                                                Approved
-                                                            </span>
-                                                        )}
                                                     </div>
                                                     <p className="mt-1 truncate text-sm text-gray-500">{loan.vehicle_name}</p>
                                                 </div>
+
                                                 <div className='flex gap-4 items-center'>
                                                     <Link href={`singleloan/${loan._id}`}>
                                                         <button className='text-green-600 border w-full font-medium hover:bg-green-100 rounded-md px-2 py-0.5 transition-all'>View</button>
                                                     </Link>
-                                                   <div className=' flex flex-col gap-2'>
-                                                   <Link href={`updateloan/${loan._id}`}>
-                                                        <button className='text-blue-600 border w-full  font-medium hover:bg-blue-100 rounded-md px-2 py-0.5 transition-all'>Edit</button>
-                                                    </Link>
-                                                    <button onClick={() => handleDelete(loan._id)} className='text-red-600 border w-full font-medium hover:bg-red-100 rounded-md px-2 py-0.5 transition-all'>Delete</button>
-                                                    
-                                                   </div>
+                                                    <div className=' flex flex-col gap-2'>
+                                                        <Link href={`updateloan/${loan._id}`}>
+                                                            <button className='text-blue-600 border w-full  font-medium hover:bg-blue-100 rounded-md px-2 py-0.5 transition-all'>Edit</button>
+                                                        </Link>
+                                                        <button onClick={() => handleDelete(loan._id)} className='text-red-600 border w-full font-medium hover:bg-red-100 rounded-md px-2 py-0.5 transition-all'>Delete</button>
+
+                                                    </div>
                                                 </div>
                                             </div>
                                         </li>

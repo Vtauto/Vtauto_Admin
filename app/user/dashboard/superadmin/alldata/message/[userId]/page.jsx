@@ -1,5 +1,5 @@
-"use client";
-import React, { useState, useEffect, useCallback } from 'react';
+"use client"
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
@@ -18,11 +18,13 @@ export default function Message({ params }) {
     const [documentData, setDocumentData] = useState([]);
     const [documentLoading, setDocumentLoading] = useState(false);
     const [selectedDocumentId, setSelectedDocumentId] = useState("");
-    const [selectedDocumentDisplayValue, setSelectedDocumentDisplayValue] = useState(""); // State for display value
+    const [selectedDocumentDisplayValue, setSelectedDocumentDisplayValue] = useState("");
     const [inputMessage, setInputMessage] = useState("");
-    const [buttonDisabled, setButtonDisabled] = useState(false); // State to manage button disabled state
+    const [buttonDisabled, setButtonDisabled] = useState(false);
 
     const adminemail = session?.user?.email;
+
+    const chatContainerRef = useRef(null); // Reference to the chat container
 
     useEffect(() => {
         const fetchadmin = async () => {
@@ -64,8 +66,8 @@ export default function Message({ params }) {
     const handleDocumentTypeChange = (event) => {
         const selectedType = event.target.value;
         setDocumentType(selectedType);
-        setSelectedDocumentId(""); // Reset selected document ID when type changes
-        setSelectedDocumentDisplayValue(""); // Reset display value when type changes
+        setSelectedDocumentId("");
+        setSelectedDocumentDisplayValue("");
         if (selectedType) {
             fetchDocumentData(selectedType);
         }
@@ -73,33 +75,33 @@ export default function Message({ params }) {
 
     const handleDocumentChange = (event) => {
         const selectedId = event.target.value;
-        setSelectedDocumentId(selectedId); // Save the selected document ID
+        setSelectedDocumentId(selectedId);
         const selectedDocument = documentData.find(doc => doc._id === selectedId);
         if (selectedDocument) {
             let displayValue;
             if (documentType === 'loan') {
-                displayValue = selectedDocument.applicant_name; // Show name for loan
+                displayValue = selectedDocument.applicant_name;
             } else if (documentType === 'rto') {
-                displayValue = selectedDocument.vehicle_no; // Show id for RTO
+                displayValue = selectedDocument.vehicle_no;
             } else if (documentType === 'insurance') {
-                displayValue = selectedDocument.name; // Show number for insurance
+                displayValue = selectedDocument.name;
             }
-            setSelectedDocumentDisplayValue(displayValue); // Save the display value
+            setSelectedDocumentDisplayValue(displayValue);
         }
     };
 
     const handleInputChange = (event) => {
-        setInputMessage(event.target.value); // Save the input message
+        setInputMessage(event.target.value);
     };
 
     const handleSendClick = async () => {
-        setButtonDisabled(true); // Disable button after click
+        setButtonDisabled(true);
         const data = {
             adminid: admin,
             userid: userId,
             documentid: selectedDocumentId,
             documenttype: documentType,
-            documentidentity: selectedDocumentDisplayValue, // Use the display value
+            documentidentity: selectedDocumentDisplayValue,
             message: inputMessage,
             type: "admin"
         };
@@ -115,15 +117,15 @@ export default function Message({ params }) {
 
             if (response.ok) {
                 await response.json();
-                setInputMessage(''); // Clear input message after sending
-                fetchUserMessages(); // Fetch messages after sending
+                setInputMessage('');
+                fetchUserMessages();
             } else {
                 console.error("Error creating message:", response.statusText);
             }
         } catch (error) {
             console.error("Error creating message:", error);
         } finally {
-            setButtonDisabled(false); // Re-enable button after message is sent
+            setButtonDisabled(false);
         }
     };
 
@@ -144,6 +146,13 @@ export default function Message({ params }) {
         fetchUserMessages();
     }, [userId, fetchUserMessages]);
 
+    useEffect(() => {
+        // Scroll to the bottom when new messages are added
+        if (chatContainerRef.current) {
+            chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+        }
+    }, [message]);
+
     const formatTimestamp = (timestamp) => {
         const date = new Date(timestamp);
         return date.toLocaleString();
@@ -162,27 +171,28 @@ export default function Message({ params }) {
                 )}
 
                 {!loading && (
-                    <div className="h-full overflow-auto pb-20">
+                    <div ref={chatContainerRef} className="h-full overflow-auto pb-20">
                         {message.length > 0 && (
                             <div>
                                 {message.map((message, index) => (
                                     <div
                                         key={index}
-                                        className={`p-3 mb-5  ${message.type === 'user' ? 'flex justify-start' : 'flex justify-end'}`}
+                                        className={`p-3 mb-5 ${message.type === 'user' ? 'flex justify-start' : 'flex justify-end'}`}
                                     >
                                         <div
                                             className={`py-1 relative px-4 font-medium max-w-xs break-words rounded-lg ${message.type === 'user' ? 'bg-blue-200 text-blue-800' : 'bg-green-200 text-green-800'}`}
                                         >
-
                                             <div className="group flex relative">
                                                 {message.message}
-
                                             </div>
-                                            <div className=' text-xs bg-white font-bold py-0.5 px-1 rounded-md'>
-                                                {message.documenttype} - {message.documentidentity}
-                                            </div>
+                                            {message.type === 'admin' && (
+                                                <div className=' text-xs bg-white font-bold py-0.5 px-1 rounded-md'>
+                                                    <>
+                                                        {message.documenttype} - {message.documentidentity}
+                                                    </>
+                                                </div>
+                                            )}
                                         </div>
-
                                     </div>
                                 ))}
                             </div>
@@ -191,8 +201,8 @@ export default function Message({ params }) {
                 )}
 
                 <div className="bg-white border py-3 px-4 absolute bottom-0 left-0 right-0 rounded-md">
-                    <div className=" grid grid-cols-6 gap-2 space-x-2 items-center">
-                        <div className=' md:col-span-1 col-span-3'>
+                    <div className="grid grid-cols-6 gap-2 space-x-2 items-center">
+                        <div className='md:col-span-1 col-span-3'>
                             <select
                                 name="documentType"
                                 id="documentType"
@@ -207,7 +217,7 @@ export default function Message({ params }) {
                             </select>
                         </div>
 
-                        <div className=' md:col-span-1 col-span-3'>
+                        <div className='md:col-span-1 col-span-3'>
                             <select
                                 name="document"
                                 id="document"
@@ -223,14 +233,14 @@ export default function Message({ params }) {
                                     documentData.map((option) => {
                                         let displayValue;
                                         if (documentType === 'loan') {
-                                            displayValue = option.applicant_name; // Show name for loan
+                                            displayValue = option.applicant_name;
                                         } else if (documentType === 'rto') {
-                                            displayValue = option.vehicle_no; // Show id for RTO
+                                            displayValue = option.vehicle_no;
                                         } else if (documentType === 'insurance') {
-                                            displayValue = option.name; // Show number for insurance
+                                            displayValue = option.name;
                                         }
                                         return (
-                                            <option key={option._id} value={option._id}> {/* Use _id or unique identifier */}
+                                            <option key={option._id} value={option._id}>
                                                 {displayValue}
                                             </option>
                                         );
@@ -239,7 +249,7 @@ export default function Message({ params }) {
                             </select>
                         </div>
 
-                        <div className=' md:col-span-4 col-span-6 flex gap-2'>
+                        <div className='md:col-span-4 col-span-6 flex gap-2'>
                             <input
                                 type="text"
                                 name=""
@@ -252,7 +262,7 @@ export default function Message({ params }) {
                             <button
                                 className={`bg-blue-500 text-white px-4 py-2 rounded-md shadow hover:bg-blue-600 focus:outline-none ${(!selectedDocumentId || !inputMessage || buttonDisabled) ? 'opacity-50 cursor-not-allowed' : ''}`}
                                 onClick={handleSendClick}
-                                disabled={!selectedDocumentId || !inputMessage || buttonDisabled} // Disable button if no document is selected, no message is typed, or button is already clicked
+                                disabled={!selectedDocumentId || !inputMessage || buttonDisabled}
                             >
                                 Send
                             </button>

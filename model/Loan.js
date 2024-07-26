@@ -191,16 +191,11 @@ const LoanSchema = new Schema(
       required: true,
     },
 
-    status: {
-      type: Boolean,
-      required: true,
-      default: false
-    },
-    default:{
-      type:String,
-      required:true,
-      default:"allloannew"
-    }
+    //
+    status: { type: String, required: true, default: "Login" },
+    file1: { type: String,  default: "null" },
+    file2: { type: String,  default: "null" },
+    default: { type: String, required: true, default: "allloannew" }
 
 
   },
@@ -208,6 +203,6 @@ const LoanSchema = new Schema(
 );
 
 const LoanModel =
-  mongoose.models.allloannew || mongoose.model("allloannew", LoanSchema);
+  mongoose.models.allloannew11 || mongoose.model("allloannew11", LoanSchema);
 
 export default LoanModel;
