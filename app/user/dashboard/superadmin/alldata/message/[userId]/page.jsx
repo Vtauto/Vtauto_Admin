@@ -191,66 +191,72 @@ export default function Message({ params }) {
                 )}
 
                 <div className="bg-white border py-3 px-4 absolute bottom-0 left-0 right-0 rounded-md">
-                    <div className="flex space-x-2 items-center">
-                        <select
-                            name="documentType"
-                            id="documentType"
-                            className='border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary transition duration-300'
-                            value={documentType}
-                            onChange={handleDocumentTypeChange}
-                        >
-                            <option value="" disabled>Select Document Type</option>
-                            <option value="insurance">Insurance</option>
-                            <option value="loan">Loan</option>
-                            <option value="rto">Rto</option>
-                        </select>
+                    <div className=" grid grid-cols-6 gap-2 space-x-2 items-center">
+                        <div className=' md:col-span-1 col-span-3'>
+                            <select
+                                name="documentType"
+                                id="documentType"
+                                className='border w-full rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary transition duration-300'
+                                value={documentType}
+                                onChange={handleDocumentTypeChange}
+                            >
+                                <option value="" disabled>Select Document Type</option>
+                                <option value="insurance">Insurance</option>
+                                <option value="loan">Loan</option>
+                                <option value="rto">Rto</option>
+                            </select>
+                        </div>
 
-                        <select
-                            name="document"
-                            id="document"
-                            className='border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary transition duration-300'
-                            disabled={documentLoading}
-                            onChange={handleDocumentChange}
-                            value={selectedDocumentId}
-                        >
-                            <option value="" disabled>Document</option>
-                            {documentLoading ? (
-                                <option disabled>Loading...</option>
-                            ) : (
-                                documentData.map((option) => {
-                                    let displayValue;
-                                    if (documentType === 'loan') {
-                                        displayValue = option.applicant_name; // Show name for loan
-                                    } else if (documentType === 'rto') {
-                                        displayValue = option.vehicle_no; // Show id for RTO
-                                    } else if (documentType === 'insurance') {
-                                        displayValue = option.name; // Show number for insurance
-                                    }
-                                    return (
-                                        <option key={option._id} value={option._id}> {/* Use _id or unique identifier */}
-                                            {displayValue}
-                                        </option>
-                                    );
-                                })
-                            )}
-                        </select>
+                        <div className=' md:col-span-1 col-span-3'>
+                            <select
+                                name="document"
+                                id="document"
+                                className='border w-full rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary transition duration-300'
+                                disabled={documentLoading}
+                                onChange={handleDocumentChange}
+                                value={selectedDocumentId}
+                            >
+                                <option value="" disabled>Document</option>
+                                {documentLoading ? (
+                                    <option disabled>Loading...</option>
+                                ) : (
+                                    documentData.map((option) => {
+                                        let displayValue;
+                                        if (documentType === 'loan') {
+                                            displayValue = option.applicant_name; // Show name for loan
+                                        } else if (documentType === 'rto') {
+                                            displayValue = option.vehicle_no; // Show id for RTO
+                                        } else if (documentType === 'insurance') {
+                                            displayValue = option.name; // Show number for insurance
+                                        }
+                                        return (
+                                            <option key={option._id} value={option._id}> {/* Use _id or unique identifier */}
+                                                {displayValue}
+                                            </option>
+                                        );
+                                    })
+                                )}
+                            </select>
+                        </div>
 
-                        <input
-                            type="text"
-                            name=""
-                            id=""
-                            className="w-full border-2 border-gray-300 py-1 px-2 rounded-md shadow-sm focus:outline-none focus:border-blue-500"
-                            placeholder="Type your message..."
-                            value={inputMessage}
-                            onChange={handleInputChange}
-                        />
-                        <button
-                            className={`bg-blue-500 text-white px-4 py-2 rounded-md shadow hover:bg-blue-600 focus:outline-none ${(!selectedDocumentId || !inputMessage || buttonDisabled) ? 'opacity-50 cursor-not-allowed' : ''}`}
-                            onClick={handleSendClick}
-                            disabled={!selectedDocumentId || !inputMessage || buttonDisabled} // Disable button if no document is selected, no message is typed, or button is already clicked
-                        >
-                            Send
-                        </button>
+                        <div className=' md:col-span-4 col-span-6 flex gap-2'>
+                            <input
+                                type="text"
+                                name=""
+                                id=""
+                                className="w-full border-2 border-gray-300 py-1 px-2 rounded-md shadow-sm focus:outline-none focus:border-blue-500"
+                                placeholder="Type your message..."
+                                value={inputMessage}
+                                onChange={handleInputChange}
+                            />
+                            <button
+                                className={`bg-blue-500 text-white px-4 py-2 rounded-md shadow hover:bg-blue-600 focus:outline-none ${(!selectedDocumentId || !inputMessage || buttonDisabled) ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                onClick={handleSendClick}
+                                disabled={!selectedDocumentId || !inputMessage || buttonDisabled} // Disable button if no document is selected, no message is typed, or button is already clicked
+                            >
+                                Send
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
