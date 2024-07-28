@@ -70,7 +70,7 @@ export default function Updateloan({ params }) {
                             <option value="Field Investigation">Field Investigation</option>
                             <option value="Credit">Credit</option>
                             <option value="Approved">Approved</option>
-                            <option value="Dispatch">Dispatch</option>
+                            <option value="Disbursement">Disbursement</option>
                             <option value="Cancel">Cancel</option>
 
                         </select>

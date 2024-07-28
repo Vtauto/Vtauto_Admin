@@ -18,6 +18,16 @@ export default function Login() {
     setLoading(true); // Set loading state to true to disable inputs and show loading indicator
 
     try {
+      // Fetch user data before attempting to sign in
+      const userData = await fetchUserData();
+
+      // Check if the user type is eligible
+      if (userData.user_type !== 1 && userData.user_type !== 2) {
+        setError("You are not eligible for this website");
+        setLoading(false); // Set loading state to false if the user is not eligible
+        return;
+      }
+
       const res = await signIn("credentials", {
         email,
         password,
@@ -30,8 +40,12 @@ export default function Login() {
         return;
       }
 
-      // Fetch user data after successful sign-in
-      await fetchUserData();
+      // Redirect based on user type after successful sign-in
+      if (userData.user_type === 2) {
+        router.push('/user/dashboard/superadmin');
+      } else if (userData.user_type === 1) {
+        router.push('/user/dashboard/superadmin');
+      }
     } catch (error) {
       console.log(error);
       setLoading(false); // Set loading state to false if there's an error
@@ -41,22 +55,13 @@ export default function Login() {
   const fetchUserData = async () => {
     try {
       const response = await axios.get(`/api/user/find-user-byemail/${email}`);
-      console.log(response.data.user_type);
-
-      if (response.data.user_type === 2) {
-        router.push('/user/dashboard/superadmin');
-      } else if (response.data.user_type === 1) {
-        router.push('/user/dashboard/admin');
-      } else {
-        setError("You are not eligible for this website");
-        setLoading(false); // Set loading state to false if the user is not eligible
-      }
+      return response.data;
     } catch (error) {
       console.error('Error fetching user:', error);
       setLoading(false); // Set loading state to false if there's an error
+      throw error; // Re-throw the error to handle it in handleSubmit
     }
   };
-
 
   const isFormValid = email.trim() !== '' && password.trim() !== '';
 

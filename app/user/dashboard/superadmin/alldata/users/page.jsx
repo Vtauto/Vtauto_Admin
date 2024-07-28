@@ -2,26 +2,61 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 
 export default function Users() {
     const [users, setUsers] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [isLoading, setIsLoading] = useState(true);
+    const [userData, setUserData] = useState(null);
+    const [loading, setLoading] = useState(true);
+
     const [sortOrder, setSortOrder] = useState('newest');
     const [userTypeFilter, setUserTypeFilter] = useState('all');
     const [statusFilter, setStatusFilter] = useState('all'); // State to track status filter
+    const { data: session } = useSession();
+
+
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            if (session?.user?.email) {
+                try {
+                    const response = await axios.get(`/api/user/find-user-byemail/${session.user.email}`);
+                    setUserData(response.data);
+                } catch (error) {
+                    setError(error.response?.data?.message || error.message);
+                } finally {
+                    setLoading(false);
+                }
+            }
+        };
+        fetchUserData();
+    }, [session]);
+
+
+
 
     useEffect(() => {
         const fetchUsers = async () => {
             try {
                 const response = await axios.get('/api/user/fetch-user/alluser');
                 if (response.data.success) {
-                    const filteredUsers = response.data.data.filter(user => user.user_type !== 2);
+                    let filteredUsers;
+                    if (userData?.user_type === 2) {
+                        filteredUsers = response.data.data.filter(user => user.user_type !== 2);
+                    } else if (userData?.user_type === 1) {
+                        filteredUsers = response.data.data.filter(user => user.user_type !== 1 && user.user_type !== 2);
+                    } else {
+                        filteredUsers = response.data.data;
+                    }
+
                     const sortedUsers = filteredUsers.sort((a, b) => {
                         return sortOrder === 'newest'
                             ? new Date(b.createdAt) - new Date(a.createdAt)
                             : new Date(a.createdAt) - new Date(b.createdAt);
                     });
+
                     setUsers(sortedUsers);
                 } else {
                     console.error('Error fetching users:', response.data.message);
@@ -33,8 +68,11 @@ export default function Users() {
             }
         };
 
-        fetchUsers();
-    }, [sortOrder]);
+        if (userData) {
+            fetchUsers();
+        }
+    }, [userData, sortOrder]);
+
 
     const filteredUsers = users
         .filter(user => user.name.toLowerCase().includes(searchTerm.toLowerCase()))
@@ -102,7 +140,7 @@ export default function Users() {
                 ) : (
                     <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                         {filteredUsers.map(user => (
-                            <li key={user._id} className={`col-span-1 border divide-y ${user.status ?  "  ring-green-500 ring-1" : "ring-red-500 ring-1" } divide-gray-200 rounded-lg bg-white shadow`}>
+                            <li key={user._id} className={`col-span-1 border divide-y ${user.status ? "  ring-green-500 ring-1" : "ring-red-500 ring-1"} divide-gray-200 rounded-lg bg-white shadow`}>
                                 <div className="flex w-full items-center justify-between space-x-6 p-6">
                                     <div className="flex-1 truncate">
                                         <div className="flex items-center space-x-3">
@@ -126,15 +164,19 @@ export default function Users() {
                                         </div>
                                         <p className="mt-1 truncate text-sm text-gray-500">{user.email}</p>
                                     </div>
-                                  <div className=' flex flex-col text-center gap-2'>
-                                  <Link href={`updateuser/${user._id}`}>
-                                        <button className='text-green-600 hover:bg-green-100 rounded-md px-2 py-0.5 transition-all border'>Edit</button>
-                                    </Link>
+                                    <div className=' flex flex-col text-center gap-2'>
+                                        <Link href={`updateuser/${user._id}`}>
+                                            <button className='text-green-600 hover:bg-green-100 rounded-md px-2 py-0.5 transition-all border'>Edit</button>
+                                        </Link>
+                                        {user.user_type === 0 && (
+                                            <Link href={`message/${user._id}`}>
+                                                <button className='text-white bg-blue-700 rounded-md px-2 py-0.5 transition-all border'>
+                                                    Message
+                                                </button>
+                                            </Link>
+                                        )}
 
-                                    <Link href={`message/${user._id}`}>
-                                        <button className='text-white bg-blue-700 rounded-md px-2 py-0.5 transition-all border'>Message</button>
-                                    </Link>
-                                  </div>
+                                    </div>
                                 </div>
                             </li>
                         ))}
