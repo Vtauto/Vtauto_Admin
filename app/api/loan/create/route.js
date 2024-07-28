@@ -54,7 +54,9 @@ export const POST = async (request) => {
 
             electricity_bill,
             agreement,
-            banking
+            banking,
+            file1,
+            file2,
 
         } = await request.json();
         const alreadyloan = await LoanModel.findOne({ applicant_aadharcard_number });
@@ -116,10 +118,12 @@ export const POST = async (request) => {
             saler_aadharcard,
             sale_agreement,
 
-            
+
             electricity_bill,
             agreement,
-            banking
+            banking,
+            file1,
+            file2,
         });
 
         return Response.json(

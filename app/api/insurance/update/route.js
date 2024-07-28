@@ -18,7 +18,9 @@ export const PATCH = async (request) => {
             pan_card,
             old_policy_no,
             old_policy,
-            status
+            status,
+            quotation,
+            policy
 
         } = await request.json();
 
@@ -47,6 +49,8 @@ export const PATCH = async (request) => {
             old_policy_no,
             old_policy,
             status,
+            quotation,
+            policy,
             updated: new Date(),
         });
 
