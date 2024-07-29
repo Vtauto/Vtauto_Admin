@@ -10,6 +10,16 @@ export default function InsurancePage() {
     const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true); // Add loading state
 
+
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear().toString().slice(-2);
+
+        return `${day}/${month}/${year}`;
+    };
+
     useEffect(() => {
         const fetchUsers = async () => {
             try {
@@ -125,6 +135,7 @@ export default function InsurancePage() {
                                                     )}
                                                 </div>
                                                 <p className="mt-1 truncate text-sm text-gray-500">{insurance.vehicle_no}</p>
+                                                   <p className="mt-1 text-sm text-gray-500">Date: {formatDate(insurance.createdAt)}</p>
                                             </div>
                                             <Link href={`updateinsurance/${insurance._id}`}>
                                                 <button className='text-green-600 hover:bg-green-100 rounded-md px-2 py-0.5 transition-all'>Edit</button>
