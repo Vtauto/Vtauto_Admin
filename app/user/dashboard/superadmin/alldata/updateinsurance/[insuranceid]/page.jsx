@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
+import { FileText } from 'lucide-react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -31,7 +32,7 @@ export default function UpdateInsurance({ params }) {
 
     const handleSubmit = async () => {
         setLoading(true); // Set loading to true when starting the upload
-    
+
         if (data.quotationFile || data.policyFile) {
             // Create FormData only if files are selected
             const formData = new FormData();
@@ -41,22 +42,22 @@ export default function UpdateInsurance({ params }) {
             if (data.policyFile) {
                 formData.append('files', data.policyFile, 'policyFile');
             }
-    
+
             try {
                 const response = await fetch('/api/upload', {
                     method: 'POST',
                     body: formData,
                 });
-    
+
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
-    
+
                 const result = await response.json();
                 console.log('Upload result:', result);
-    
+
                 await updateInsuranceWithUrls(result);
-    
+
             } catch (error) {
                 console.error('Error uploading files:', error);
             } finally {
@@ -68,29 +69,29 @@ export default function UpdateInsurance({ params }) {
             setLoading(false); // Set loading to false when update completes
         }
     };
-    
+
     const updateInsuranceWithUrls = async (result) => {
         const { file } = result;
-    
+
         // If file is not provided, fetch existing URLs from the insurance state
         const quotationFileUrl = (file[0]?.secure_url || insurance.quotation) || '';
         const policyFileUrl = (file[1]?.secure_url || insurance.policy) || '';
-    
+
         if (!quotationFileUrl && !policyFileUrl) {
             console.error('Received empty file URLs:', { quotationFileUrl, policyFileUrl });
             return;
         }
-    
+
         console.log('Quotation file URL:', quotationFileUrl);
         console.log('Policy file URL:', policyFileUrl);
-    
+
         try {
             const response = await axios.patch('/api/insurance/update', {
                 id: insuranceId,
                 quotation: quotationFileUrl,
                 policy: policyFileUrl,
             });
-    
+
             if (response.status === 200) {
                 setInsurance((prevInsurance) => ({
                     ...prevInsurance,
@@ -106,7 +107,7 @@ export default function UpdateInsurance({ params }) {
             console.error('Error updating insurance with file URLs:', error);
         }
     };
-    
+
     useEffect(() => {
         const fetchInsurance = async () => {
             try {
@@ -192,7 +193,7 @@ export default function UpdateInsurance({ params }) {
 
     return (
         <div className='flex justify-center items-center mt-4'>
-              <ToastContainer />
+            <ToastContainer />
             <form className='flex flex-col border sm:w-2/3 w-full p-4 rounded-md shadow'>
                 <div className="flex justify-between">
                     <button type="button" onClick={handlePrint} className='bg-blue-600 w-fit text-white font-medium py-1 px-4 rounded-md m-2'>Print</button>
@@ -327,6 +328,40 @@ export default function UpdateInsurance({ params }) {
                                 </Link>
                             ))}
                         </div>
+                    </div>
+                    <div className="bg-white w-full md:w-1/3 lg:w-fit flex flex-col rounded-md border border-gray-300 px-3 py-2 shadow-sm focus-within:shadow-inner">
+                        <span className='font-bold mb-2'>Quotation and Policy Pdf</span>
+                        <div className='flex flex-wrap gap-2'>
+                            {insurance.quotation && (
+                                <div className='relative group'>
+                                    <Link href={insurance.quotation} target="_blank" rel="noopener noreferrer" className='flex items-center gap-2'>
+                                        <div className='font-semibold flex flex-col items-center bg-blue-500 text-white px-2 py-1 rounded-md shadow-lg transition transform group-hover:scale-105 group-hover:bg-blue-600'>
+                                            <div><FileText /></div>
+                                            <div>Quotation</div>
+                                        </div>
+                                    </Link>
+                                    <span className='absolute left-0 text-center top-full mt-1 text-xs text-gray-500 opacity-0 transition-opacity group-hover:opacity-100'>
+                                        View the Quotation document
+                                    </span>
+                                </div>
+                            )}
+
+                            {insurance.policy && (
+                                <div className='relative group'>
+                                    <Link href={insurance.policy} target="_blank" rel="noopener noreferrer" className='flex items-center gap-2'>
+                                        <div className='font-semibold flex flex-col items-center bg-blue-500 text-white px-2 py-1 rounded-md shadow-lg transition transform group-hover:scale-105 group-hover:bg-blue-600'>
+                                            <div><FileText /></div>
+                                            <div>Policy</div>
+
+                                        </div>
+                                    </Link>
+                                    <span className='absolute text-center left-0 top-full mt-1 text-xs text-gray-500 opacity-0 transition-opacity group-hover:opacity-100'>
+                                        View the Policy document
+                                    </span>
+                                </div>
+                            )}
+                        </div>
+
                     </div>
                 </div>
 

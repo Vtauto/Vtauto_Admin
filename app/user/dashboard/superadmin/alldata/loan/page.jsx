@@ -157,7 +157,7 @@ export default function AllLoan() {
                     </div>
 
                     <div className="flex flex-wrap gap-4">
-                        <div className="mb-4 flex flex-col gap-2 shadow px-4 py-2 bg-blue-100 rounded-md">
+                        <div className="mb-4 flex flex-col gap-2 shadow px-4 py-2    rounded-md">
                             <label className="font-semibold">Define the Date Period</label>
                             <div className="flex gap-4">
                                 <div className="flex flex-col w-full">
@@ -183,7 +183,7 @@ export default function AllLoan() {
                             </div>
                         </div>
 
-                        <div className="mb-4 flex flex-col gap-2 shadow px-4 py-2 bg-blue-100 rounded-md">
+                        <div className="mb-4 flex flex-col gap-2 shadow px-4 py-2 rounded-md">
                             <label className="font-semibold">Select Date</label>
                             <div className="flex flex-col w-full">
                                 <span className="block text-sm text-gray-500">Choose Date</span>
