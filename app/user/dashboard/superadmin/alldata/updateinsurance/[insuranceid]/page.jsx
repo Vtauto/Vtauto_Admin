@@ -332,8 +332,7 @@ export default function UpdateInsurance({ params }) {
                     <div className="bg-white w-full md:w-1/3 lg:w-fit flex flex-col rounded-md border border-gray-300 px-3 py-2 shadow-sm focus-within:shadow-inner">
                         <span className='font-bold mb-2'>Quotation and Policy Pdf</span>
                         <div className='flex flex-wrap gap-2'>
-                            {insurance.quotation && insurance.quotation !== "null" && (
-
+                            {insurance.quotation && (
                                 <div className='relative group'>
                                     <Link href={insurance.quotation} target="_blank" rel="noopener noreferrer" className='flex items-center gap-2'>
                                         <div className='font-semibold flex flex-col items-center bg-blue-500 text-white px-2 py-1 rounded-md shadow-lg transition transform group-hover:scale-105 group-hover:bg-blue-600'>
@@ -347,7 +346,7 @@ export default function UpdateInsurance({ params }) {
                                 </div>
                             )}
 
-                            {insurance.policy && insurance.policy !== "null" && (
+                            {insurance.policy && (
                                 <div className='relative group'>
                                     <Link href={insurance.policy} target="_blank" rel="noopener noreferrer" className='flex items-center gap-2'>
                                         <div className='font-semibold flex flex-col items-center bg-blue-500 text-white px-2 py-1 rounded-md shadow-lg transition transform group-hover:scale-105 group-hover:bg-blue-600'>
