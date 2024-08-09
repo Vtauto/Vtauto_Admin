@@ -3,38 +3,33 @@ import { upload } from "@/lib/upload";
 export const POST = async (request) => {
     try {
         const formData = await request.formData();
-        // console.log(formData);
-        const image = formData.get("file");
-        console.log(image, "Sdsd");
-        const abd = formData.getAll('files');
-        console.log(abd);
-        // const imagess = abd.map(async (f)=>(await upload(f)));
+        const files = formData.getAll('files');
         const urlArray = [];
-        for (const fileType of abd) {
-            
-              const fileUrl = await upload(fileType);
-              console.log(fileUrl);
-              urlArray.push(fileUrl);
-            
-          }
-        // const uploadedImage = await upload(image);
-        // console.log(imagess);
 
-        return Response.json(
-            {
-                message: "File uploaded to cloudinary!",
+        for (const file of files) {
+            if (file.size > 100 * 1024 * 1024) { // Check file size (100MB limit here)
+                throw new Error('File size exceeds the limit of 100MB');
+            }
+
+            const fileUrl = await upload(file);
+            urlArray.push(fileUrl);
+        }
+
+        return new Response(
+            JSON.stringify({
+                message: "Files uploaded successfully!",
                 success: true,
                 file: urlArray,
-            },
+            }),
             { status: 200 }
         );
     } catch (error) {
-        console.log("Error on creating product:", error);
-        return Response.json(
-            {
-                message: "Error on creating product!",
+        console.error("Error uploading files:", error);
+        return new Response(
+            JSON.stringify({
+                message: "Error uploading files!",
                 success: false,
-            },
+            }),
             { status: 500 }
         );
     }
